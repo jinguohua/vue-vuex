@@ -10,19 +10,24 @@
                     <TabPane label="登录" icon="logo-apple">
                         <Row>
                             <Col span="18" offset='3'>
-                                <Input prefix="ios-contact" placeholder="Enter name" style="width: 100% ;background-color:rgba(0,0,0,.2);" >
+                                <Input prefix="ios-contact" v-model="userName" placeholder="Enter name" style="width: 100% ;background-color:rgba(0,0,0,.2);" >
                                 </Input>
                             </Col>
                         </Row>
                         <br>
                         <Row>
                             <Col span="18" offset='3'>
-                                <Input prefix="md-key" placeholder="Enter Password" style="width: 100%;background-color:rgba(0,0,0,.2);" />
+                                <Input prefix="md-key" v-model="password" placeholder="Enter Password" style="width: 100%;background-color:rgba(0,0,0,.2);" />
                             </Col>
                         </Row>
+                        <Footer :style="{backgroundImage: 'url(' + star + ')', backgroundSize:'contain'}">
+                            <Row>
+                                <Col span="9" offset='3'><Button type="default" ghost @click="login">登录</Button></Col>
+                                <Col span="9" offset='3'><Button type="primary" ghost>忘记密码</Button></Col>
+                            </Row>
+                        </Footer>
                     </TabPane>
                     <TabPane label="注册" icon="logo-windows">
-
                     </TabPane>
                     <TabPane label="随便看看" icon="logo-tux">
                         
@@ -31,10 +36,8 @@
                 <br>
             </Content>
             <Footer :style="{backgroundImage: 'url(' + star + ')', backgroundSize:'contain'}"> </Footer>
-            <Footer :style="{backgroundImage: 'url(' + star + ')', backgroundSize:'contain'}">
-                <Button type="default" ghost>登录</Button>
-                <Button type="primary" ghost>忘记密码</Button>
-            </Footer>
+            
+            <Footer :style="{backgroundImage: 'url(' + star + ')', backgroundSize:'contain'}"> </Footer>
             <Footer :style="{backgroundImage: 'url(' + star + ')', backgroundSize:'contain'}"> </Footer>
         </Layout>
     </div>
@@ -42,12 +45,32 @@
 <script>
 import iview from 'iview'
 import star from '@/assets/star.gif'
+import {mapActions} from 'vuex'
 export default {
     name:'Login',
     data(){
         return{
-            star:star
+            star:star,
+            userName:'',
+            password:''
         }
+    },
+    methods:{
+        ...mapActions([
+            'submitLogin'
+        ]),
+        login(){
+            this.$store.dispatch(
+                {
+                    type:'submitLogin',
+                    userInfo:{
+                        userName:this.userName,
+                        password:this.password
+                    }
+                }
+            )
+        }
+
     }
 }
 </script>
@@ -55,6 +78,6 @@ export default {
     .ivu-input{
         background-color: rgba(0,0,0,.2) !important;
         color: aliceblue !important;
-        height: 80px;
+        height: 40px !important;
     }
 </style> 

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import axios from 'axios'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -15,11 +15,19 @@ export default new Vuex.Store({
      
   },
   mutations: {
-    increment(state){
+    storeUserInfo(state){
       state.count++
     }
   },
   actions: {
-    
+    submitLogin({commit},payload){
+      console.log(payload);
+      axios.get('info.json').then(data=>{
+        debugger
+      }).catch(data=>{
+
+      })
+      commit('storeUserInfo',payload)
+    }
   }
 })
